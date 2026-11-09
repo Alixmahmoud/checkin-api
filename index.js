@@ -66,7 +66,8 @@ app.post('/members', (req, res) => {
 });
 
 app.post('/checkins', (req, res) => {
-  const memberId = req.body.memberId;
+
+  const { memberId } = req.body || {};
 
   if (!memberId || !Number.isInteger(memberId) || memberId <= 0) {
     return sendError(res, 400, 'VALIDATION_ERROR', 'memberId must be a valid integer');
@@ -102,6 +103,10 @@ app.get('/members/:id/checkins', (req, res) => {
   const memberCheckins = checkins.filter((item) => item.memberId === id);
   memberCheckins.sort((a, b) => new Date(b.checkedInAt) - new Date(a.checkedInAt));
   return res.status(200).json(memberCheckins);
+});
+
+app.use((req, res) => {
+  return sendError(res, 404, 'NOT_FOUND', 'Route not found');
 });
 
 app.use((err, req, res, next) => {

@@ -155,8 +155,9 @@ Invalid or missing fields return `400`:
 
 ### `POST /checkins`
 
-Creates a check-in for an existing member. The request's `id` is the member ID;
-the API generates a separate, sequential `id` for each successful check-in.
+Creates a check-in for an existing member. The request's `memberId` identifies
+the member; the API generates a separate, sequential `id` for each successful
+check-in.
 
 **Example request**
 
@@ -183,3 +184,34 @@ Content-Type: application/json
 
 The timestamp in the response is generated when the check-in is created.
 Invalid `memberId` values return `400`; IDs for members that do not exist return `404`.
+
+### `GET /members/:id/checkins`
+
+Returns all check-ins for the specified member, newest first. A member with no
+check-ins receives an empty array.
+
+**Example request**
+
+```http
+GET /members/1/checkins
+```
+
+**Example response** (`200 OK`)
+
+```json
+[
+  {
+    "id": 1,
+    "memberId": 1,
+    "checkedInAt": "2026-11-09T14:53:10.758Z"
+  }
+]
+```
+
+## Status codes
+
+- **200 OK** — The request succeeded (for example, listing members or check-ins).
+- **201 Created** — A member or check-in was created successfully.
+- **400 Bad Request** — The request contains invalid input, such as a malformed
+  ID, missing check-in body, or invalid member fields.
+- **404 Not Found** — The requested route or member does not exist.
