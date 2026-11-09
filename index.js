@@ -22,7 +22,7 @@ app.get('/members/:id', (req, res) => {
   const member = members.find((item) => item.id === id);
 
   if (!member) {
-    return sendError(res, 404, 'NOT_FOUND', `Member with id ${req.params.id} was not found`);
+    return sendError(res, 400, 'NOT_FOUND', `Member with id ${req.params.id} was not found`);
   }
 
   return res.status(200).json(member);
@@ -40,7 +40,7 @@ app.post('/members', (req, res) => {
   }
 
   const member = {
-    id: members.reduce((maxId, item) => Math.max(maxId, item.id), 0) + 1,
+    id: members.length > 0 ? members[members.length - 1].id + 1 : 1,
     name: name.trim(),
     phone,
   };
