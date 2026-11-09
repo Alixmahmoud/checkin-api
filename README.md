@@ -33,6 +33,51 @@ GET /members
     "id": 1,
     "name": "Aly",
     "phone": "01000000000"
+  },
+  {
+    "id": 2,
+    "name": "Sam",
+    "phone": "01000000001"
+  },
+  {
+    "id": 3,
+    "name": "Maya",
+    "phone": "01000000002"
+  },
+  {
+    "id": 4,
+    "name": "Omar",
+    "phone": "01000000003"
+  },
+  {
+    "id": 5,
+    "name": "Nina",
+    "phone": "01000000004"
+  },
+  {
+    "id": 6,
+    "name": "Liam",
+    "phone": "01000000005"
+  },
+  {
+    "id": 7,
+    "name": "Zara",
+    "phone": "01000000006"
+  },
+  {
+    "id": 8,
+    "name": "Noah",
+    "phone": "01000000007"
+  },
+  {
+    "id": 9,
+    "name": "Lina",
+    "phone": "01000000008"
+  },
+  {
+    "id": 10,
+    "name": "Adam",
+    "phone": "01000000009"
   }
 ]
 ```
@@ -91,7 +136,7 @@ Content-Type: application/json
 
 ```json
 {
-  "id": 2,
+  "id": 11,
   "name": "Sam",
   "phone": "01234567890"
 }
@@ -107,3 +152,34 @@ Invalid or missing fields return `400`:
   }
 }
 ```
+
+### `POST /checkins`
+
+Creates a check-in for an existing member. The request's `id` is the member ID;
+the API generates a separate, sequential `id` for each successful check-in.
+
+**Example request**
+
+```http
+POST /checkins
+Content-Type: application/json
+```
+
+```json
+{
+  "memberId": 1
+}
+```
+
+**Example response** (`201 Created`)
+
+```json
+{
+  "id": 1,
+  "memberId": 1,
+  "checkedInAt": "2026-11-09T14:53:10.758Z"
+}
+```
+
+The timestamp in the response is generated when the check-in is created.
+Invalid `memberId` values return `400`; IDs for members that do not exist return `404`.
